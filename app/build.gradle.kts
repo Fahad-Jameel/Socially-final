@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.shaffinimam.i212963"
+    namespace = "com.fahad.i210394"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.shaffinimam.i212963"
+        applicationId = "com.fahad.i210394"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "56901121663",
+    "project_id": "socially-app-vehshi",
+    "storage_bucket": "socially-app-vehshi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56901121663:android:4c24710de65b0dd3bff14a",
+        "android_client_info": {
+          "package_name": "com.fahad.i210394"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuPcZDb4JtFW5aTfal5IVP8S11kUpyk9s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

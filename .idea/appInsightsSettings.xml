@@ -8,9 +8,9 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.shaffinimam.i212963" />
+                  <option name="appId" value="com.fahad.i210394" />
                   <option name="mobileSdkAppId" value="1:183254395373:android:9f026fa1c55d85219d5fe4" />
-                  <option name="projectId" value="connectme-b2b49" />
+                  <option name="projectId" value="socially-b2b49" />
                   <option name="projectNumber" value="183254395373" />
                 </ConnectionSetting>
               </option>
