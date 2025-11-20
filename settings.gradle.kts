@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ConnectMe"
+rootProject.name = "socially"
 include(":app")
  
