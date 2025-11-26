@@ -101,7 +101,7 @@ class Adapter_cont(
 
     private fun checkUserStatus(userId: Int, statusView: View) {
         // Create request URL
-        val url = apiconf.BASE_URL+"getstatus.php?id=$userId"
+        val url = "${apiconf.BASE_URL}getstatus.php?id=$userId"
 
         val request = StringRequest(
             Request.Method.GET, url,

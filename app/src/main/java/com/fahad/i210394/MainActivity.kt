@@ -3,6 +3,8 @@ package com.fahad.i210394
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
@@ -20,6 +22,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Show splash screen for 2 seconds
+        Handler(Looper.getMainLooper()).postDelayed({
+            navigateToNextScreen()
+        }, 2000) // 2 seconds delay
+    }
+
+    private fun navigateToNextScreen() {
         val sharedPref = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
         val userId = sharedPref.getInt("user_id", -1)
 

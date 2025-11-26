@@ -140,7 +140,7 @@
             android:id="@+id/logi"
             android:text="Login"
             android:textSize="15sp"
-            android:textColor="#EBAC05"
+            android:textColor="#8B4513"
             android:textStyle="bold"
             android:fontFamily="sans-serif"
             android:paddingLeft="10dp"

@@ -15,7 +15,7 @@ import org.json.JSONObject
 
 class Register : AppCompatActivity() {
 
-    private val url = apiconf.BASE_URL+"/Auth/signup.php"
+    private val url = "${apiconf.BASE_URL}Auth/signup.php"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

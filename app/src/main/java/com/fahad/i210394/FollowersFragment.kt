@@ -43,7 +43,7 @@ class FollowersFragment : Fragment() {
     }
 
     private fun fetchUsersFromAPI(userid: Int) {
-        val url = apiconf.BASE_URL + "Follow/getfollowers.php"
+        val url = "${apiconf.BASE_URL}Follow/getfollowers.php"
         Log.d("API Response", userid.toString())
         val request = object : StringRequest(
             Method.POST, url,

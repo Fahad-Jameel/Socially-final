@@ -2,6 +2,7 @@ package com.fahad.i210394
 
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,12 +24,11 @@ class DM_M : Fragment() {
     private val userList = mutableListOf<Model_dm>()
 
     private lateinit var dbHelper: ProfileDBHelper
-    private val apiUrl = apiconf.BASE_URL+"Profile/getallprofiles.php" // change to your full API URL
+    private val apiUrl = "${apiconf.BASE_URL}profile/getallprofiles.php" // Fixed: lowercase 'profile' to match server directory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dbHelper = ProfileDBHelper(requireContext())
-        fetchProfilesFromAPI()
     }
 
     override fun onCreateView(
@@ -47,6 +47,7 @@ class DM_M : Fragment() {
         recyclerView.adapter = adapter
 
         loadProfilesFromDB()
+        fetchProfilesFromAPI()
     }
 
     private fun fetchProfilesFromAPI() {
@@ -89,11 +90,12 @@ class DM_M : Fragment() {
             { error ->
                 context?.let {
                     Toast.makeText(
-                        requireContext(),
-                        "Volley error: ${error.message}",
+                        it,
+                        "Error loading profiles: ${error.message ?: "Unknown error"}",
                         Toast.LENGTH_LONG
                     ).show()
                 }
+                Log.e("DM_M", "Volley error: ${error.message}", error)
             }
         )
 

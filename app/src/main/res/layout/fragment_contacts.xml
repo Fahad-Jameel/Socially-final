@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Contacts"
-            android:textColor="#E8AD05"
+            android:textColor="#8B4513"
             android:fontFamily="sans-serif-black"
             android:textStyle="bold"
             android:textSize="25sp"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             app:tabGravity="fill"
             app:tabTextColor="#000"
-            app:tabIndicatorColor="#E8AD05"
+            app:tabIndicatorColor="#8B4513"
             app:tabMode="fixed"/>
 
         <FrameLayout

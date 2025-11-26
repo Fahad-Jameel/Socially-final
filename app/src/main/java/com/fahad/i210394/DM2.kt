@@ -140,7 +140,7 @@ class DM2 : AppCompatActivity() {
         val senderId = SharedPrefManager.getUserId(this)
         if (senderId == -1) return
 
-        val url = "${apiconf.BASE_URL}/Notification/update_fcm_token.php"
+        val url = "${apiconf.BASE_URL}Notification/update_fcm_token.php"
         val queue = Volley.newRequestQueue(this)
 
         val request = object : StringRequest(Method.POST, url,
@@ -195,9 +195,9 @@ class DM2 : AppCompatActivity() {
         if (senderId == -1) return
 
         val url = if (type == "media") {
-            "${apiconf.BASE_URL}/Message/send_media_message.php"
+            "${apiconf.BASE_URL}Message/send_media_message.php"
         } else {
-            "${apiconf.BASE_URL}/Message/send_message.php"
+            "${apiconf.BASE_URL}Message/send_message.php"
         }
 
         val queue = Volley.newRequestQueue(this)
@@ -238,7 +238,7 @@ class DM2 : AppCompatActivity() {
     }
 
     private fun sendPushNotification(content: String, type: String) {
-        val url = "${apiconf.BASE_URL}/Notification/send_notification.php"
+        val url = "${apiconf.BASE_URL}Notification/send_notification.php"
         val queue = Volley.newRequestQueue(this)
 
         val senderName = name ?: "Someone"
@@ -271,7 +271,7 @@ class DM2 : AppCompatActivity() {
         val senderId = SharedPrefManager.getUserId(this)
         if (senderId == -1) return
 
-        val url = "${apiconf.BASE_URL}/Message/get_messages.php"
+        val url = "${apiconf.BASE_URL}Message/get_messages.php"
         val queue = Volley.newRequestQueue(this)
 
         val request = object : StringRequest(Method.POST, url,
@@ -375,7 +375,7 @@ class DM2 : AppCompatActivity() {
     }
 
     private fun editMessage(message: Message, newContent: String) {
-        val url = "${apiconf.BASE_URL}/Message/edit_message.php"
+        val url = "${apiconf.BASE_URL}Message/edit_message.php"
         val queue = Volley.newRequestQueue(this)
 
         val request = object : StringRequest(Method.POST, url,
@@ -390,7 +390,7 @@ class DM2 : AppCompatActivity() {
     }
 
     private fun deleteMessage(message: Message) {
-        val url = "${apiconf.BASE_URL}/Message/delete_message.php"
+        val url = "${apiconf.BASE_URL}Message/delete_message.php"
         val queue = Volley.newRequestQueue(this)
 
         val request = object : StringRequest(Method.POST, url,

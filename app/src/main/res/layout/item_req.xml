@@ -49,7 +49,7 @@
                 android:layout_gravity="end"
                 android:textColor="@color/white"
                 android:text="Accept"
-                android:background="#E8AD05"
+                android:background="#8B4513"
                 android:src="@drawable/photocamera"
                 tools:ignore="ContentDescription" />
         </LinearLayout>

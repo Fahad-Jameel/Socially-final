@@ -13,7 +13,7 @@ import java.net.URL
 
 object NetworkHelper {
     private const val TAG = "NetworkHelper"
-    private const val SERVER_URL = apiconf.BASE_URL + "/Calls/"
+    private const val SERVER_URL = "${apiconf.BASE_URL}Calls/"
 
     suspend fun startCall(callerId: Int, receiverId: Int): Boolean {
         return withContext(Dispatchers.IO) {

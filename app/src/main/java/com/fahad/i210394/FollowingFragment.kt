@@ -44,7 +44,7 @@ class FollowingFragment : Fragment() {
     }
 
     private fun fetchUsersFromAPI(userid: Int) {
-        val url = apiconf.BASE_URL + "Follow/requests.php" // replace with your real URL
+        val url = "${apiconf.BASE_URL}Follow/requests.php" // Fixed: removed leading slash
 
         val request = object : StringRequest(
             Method.POST, url,

@@ -81,7 +81,7 @@ class Home : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        getPostFromAPI(this, apiconf.BASE_URL+"Post/getpost.php",
+        getPostFromAPI(this, "${apiconf.BASE_URL}Post/getpost.php",
             onSuccess = { postList ->
                 val adapter = PostAdapter(requireContext(), postList)
                 recyclerView.adapter = adapter

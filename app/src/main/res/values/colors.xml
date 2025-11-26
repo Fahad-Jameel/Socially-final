@@ -6,7 +6,7 @@
     <color name="brown">#8B4513</color>
     <color name="darkGray">#666666</color>
     <color name="lightGray">#E0E0E0</color>
-    <color name="post_yellow">#E8AD05</color>
+    <color name="post_yellow">#8B4513</color>
     <color name="gray_text">#888888</color>
     <color name="story_border_color">#3897F0</color>
 </resources>

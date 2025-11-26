@@ -49,7 +49,7 @@ class Contact_Follow_Fragment : Fragment() {
     }
 
     private fun fetchUsersFromAPI(userid: Int) {
-        val url = apiconf.BASE_URL+"Follow/getcontfoll.php" // replace with your real URL
+        val url = "${apiconf.BASE_URL}Follow/getcontfoll.php" // Fixed: removed leading slash
 
         val request = object : StringRequest(Method.POST, url,
             { response ->
@@ -123,12 +123,22 @@ class AdapterF(
     override fun getItemCount(): Int = userList.size
 
     private fun sendUID(uid: Int, button: Button) {
-        val url = apiconf.BASE_URL+"Follow/follow.php"
+        val url = "${apiconf.BASE_URL}Follow/follow.php"
 
         val request = object : StringRequest(Method.POST, url,
             { response ->
-                button.text = "Done"
-                button.isEnabled = false
+                try {
+                    val jsonResponse = JSONObject(response)
+                    if (jsonResponse.getString("status") == "success") {
+                        button.text = "Done"
+                        button.isEnabled = false
+                        Toast.makeText(context, "Follow request sent successfully", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, jsonResponse.optString("message", "Failed to send follow request"), Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(context, "Error parsing response: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             },
             { error ->
                 Toast.makeText(context, "Error: ${error.message}", Toast.LENGTH_SHORT).show()

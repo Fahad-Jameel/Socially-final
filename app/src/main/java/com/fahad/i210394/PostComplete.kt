@@ -79,7 +79,7 @@ class PostComplete : AppCompatActivity() {
                 val base64Image = bitmapToBase64(compressedBitmap)
 
                 val userId = SharedPrefManager.getUserId(this)
-                val apiUrl = "${apiconf.BASE_URL}/Post/createpost.php"
+                val apiUrl = "${apiconf.BASE_URL}Post/createpost.php"
 
                 val postData = "id=$userId&picture=$base64Image&caption=$caption"
 

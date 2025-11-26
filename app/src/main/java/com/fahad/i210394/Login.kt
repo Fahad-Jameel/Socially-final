@@ -43,7 +43,7 @@ class Login : AppCompatActivity() {
     }
 
     private fun performLogin(email: String, password: String) {
-        val url = apiconf.BASE_URL + "/Auth/login.php"
+        val url = "${apiconf.BASE_URL}Auth/login.php"
 
         val queue = Volley.newRequestQueue(this)
         val request = object : StringRequest(Request.Method.POST, url,

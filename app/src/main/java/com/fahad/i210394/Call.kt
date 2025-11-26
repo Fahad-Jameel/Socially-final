@@ -1,13 +1,17 @@
 package com.fahad.i210394
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import io.agora.rtc2.Constants
 import io.agora.rtc2.IRtcEngineEventHandler
@@ -22,7 +26,24 @@ class Call : AppCompatActivity() {
     private var isIncoming = false
     private var callId = 0
     private val channelName = "testchannel"
-    private val APP_ID = "fe89e5de87704a8caa08c4f95fc7ee2d"
+    private val APP_ID = "a19df3132d7b4ea48b013a5d44b9efb7"
+    private var isPermissionGranted = false
+
+    // Permission launcher for RECORD_AUDIO
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        isPermissionGranted = isGranted
+        if (isGranted) {
+            Log.d(TAG, "Audio permission granted")
+            initializeRtcEngine()
+            proceedWithCall()
+        } else {
+            Log.e(TAG, "Audio permission denied")
+            Toast.makeText(this, "Microphone permission is required for calls", Toast.LENGTH_LONG).show()
+            finish()
+        }
+    }
 
     private val rtcEventHandler = object : IRtcEngineEventHandler() {
         override fun onJoinChannelSuccess(channel: String?, uid: Int, elapsed: Int) {
@@ -50,8 +71,23 @@ class Call : AppCompatActivity() {
 
         override fun onError(err: Int) {
             runOnUiThread {
-                Log.e(TAG, "RTC Error: $err")
-                Toast.makeText(this@Call, "Call error: $err", Toast.LENGTH_SHORT).show()
+                val errorMessage = when (err) {
+                    101 -> "Invalid App ID. Please check your Agora App ID configuration."
+                    110 -> "Invalid App ID or Token. Please verify your Agora credentials."
+                    1012 -> "Network error. Please check your internet connection."
+                    1011 -> "Network timeout. Please try again."
+                    17 -> "Failed to join channel. Please try again."
+                    1018 -> "Invalid channel name."
+                    else -> "Call error: $err"
+                }
+                Log.e(TAG, "RTC Error: $err - $errorMessage")
+                
+                // Don't show toast for every error to avoid spam
+                if (err == 110 || err == 101) {
+                    Toast.makeText(this@Call, errorMessage, Toast.LENGTH_LONG).show()
+                } else {
+                    Log.d(TAG, "Non-critical error: $err")
+                }
             }
         }
     }
@@ -108,9 +144,34 @@ class Call : AppCompatActivity() {
             finish()
         }
 
-        // Initialize RTC Engine
-        initializeRtcEngine()
+        // Check and request audio permission before initializing RTC Engine
+        checkAudioPermission()
+    }
 
+    private fun checkAudioPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                Log.d(TAG, "Audio permission already granted")
+                isPermissionGranted = true
+        initializeRtcEngine()
+                proceedWithCall()
+            }
+            else -> {
+                Log.d(TAG, "Requesting audio permission")
+                requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+            }
+        }
+    }
+
+    private fun proceedWithCall() {
+        // For unsecured projects, no token is needed - proceed directly with call
+        startCallProcess()
+    }
+
+    private fun startCallProcess() {
         // Start or join the call
         if (!isIncoming) {
             // For outgoing calls, notify the server first
@@ -139,6 +200,15 @@ class Call : AppCompatActivity() {
 
     private fun initializeRtcEngine() {
         try {
+            // Validate App ID format (should be 32 characters)
+            if (APP_ID.length != 32) {
+                Log.e(TAG, "Invalid App ID format. Expected 32 characters, got ${APP_ID.length}")
+                Toast.makeText(this, "Invalid App ID configuration. Please check your Agora settings.", Toast.LENGTH_LONG).show()
+                finish()
+                return
+            }
+            
+            Log.d(TAG, "Initializing RTC Engine with App ID: ${APP_ID.take(8)}...")
             rtcEngine = RtcEngine.create(applicationContext, APP_ID, rtcEventHandler)
             rtcEngine?.setChannelProfile(Constants.CHANNEL_PROFILE_COMMUNICATION)
             rtcEngine?.enableAudio()
@@ -154,12 +224,25 @@ class Call : AppCompatActivity() {
 
     private fun joinChannel() {
         try {
+            if (rtcEngine == null) {
+                Log.e(TAG, "RTC Engine is null, cannot join channel")
+                Toast.makeText(this, "Call engine not initialized", Toast.LENGTH_SHORT).show()
+                finish()
+                return
+            }
+            
             // For incoming calls, we join as the receiver ID
             // For outgoing calls, we join as the caller ID
             val myUid = if (isIncoming) receiverId else callerId
 
             Log.d(TAG, "Joining channel: $channelName as user: $myUid")
-            rtcEngine?.joinChannel(null, channelName, null, myUid)
+            // For unsecured projects, use null token (no certificate required)
+            val result = rtcEngine?.joinChannel(null, channelName, null, myUid)
+            if (result != 0) {
+                Log.e(TAG, "Failed to join channel, error code: $result")
+            } else {
+                Log.d(TAG, "Join channel request sent successfully")
+            }
         } catch (e: Exception) {
             Log.e(TAG, "Failed to join channel", e)
             Toast.makeText(this, "Failed to join call: ${e.message}", Toast.LENGTH_SHORT).show()

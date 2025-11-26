@@ -52,7 +52,7 @@ class EditProfile : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val url = apiconf.BASE_URL + "profile/getProfile.php"
+        val url = "${apiconf.BASE_URL}profile/getProfile.php"
         val name = findViewById<TextView>(R.id.nametit)
         val stringRequest = object : StringRequest(
             Request.Method.POST, url,
@@ -157,7 +157,7 @@ class EditProfile : AppCompatActivity() {
         val picture = base64Image ?: ""
 
 
-        val url = apiconf.BASE_URL + "profile/editprofile.php"  // or your actual file name
+        val url = "${apiconf.BASE_URL}profile/editprofile.php"  // Fixed: removed leading slash
 
         val requestQueue = Volley.newRequestQueue(this)
 

@@ -75,7 +75,7 @@ class Profile : Fragment() {
     }
 
     private fun Geting(view: View) {
-        val url = apiconf.BASE_URL + "profile/getProfile.php"
+        val url = "${apiconf.BASE_URL}profile/getProfile.php"
         val name = view.findViewById<TextView>(R.id.nametit)
 
         val stringRequest = object : StringRequest(

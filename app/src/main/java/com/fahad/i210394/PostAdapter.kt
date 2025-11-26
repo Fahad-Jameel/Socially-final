@@ -56,6 +56,12 @@ class PostAdapter(private val context: Context, private val posts: List<Post>) :
             holder.postImage.setImageResource(R.drawable.post) // Fallback
         }
 
+        // Set up comment button click listener
+        holder.commentButton.setOnClickListener {
+            val commentsDialog = CommentsDialog(context, post.postId)
+            commentsDialog.show()
+        }
+
     }
 
     override fun getItemCount(): Int = posts.size

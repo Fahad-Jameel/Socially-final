@@ -44,7 +44,7 @@ class MyApp:Application(),LifecycleObserver {
         val userId = SharedPrefManager.getUserId(this)
 
         // Create request URL
-        val url = apiconf.BASE_URL+"setstatus.php"
+        val url = "${apiconf.BASE_URL}setstatus.php"
 
         // Create request params
         val params = HashMap<String, String>()

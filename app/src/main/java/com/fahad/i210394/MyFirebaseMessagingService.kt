@@ -58,7 +58,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val userId = SharedPrefManager.getUserId(this)
         if (userId == -1) return
 
-        val url = "${apiconf.BASE_URL}/Notification/update_fcm_token.php"
+        val url = "${apiconf.BASE_URL}Notification/update_fcm_token.php"
         val queue = Volley.newRequestQueue(this)
 
         val request = object : StringRequest(Method.POST, url,

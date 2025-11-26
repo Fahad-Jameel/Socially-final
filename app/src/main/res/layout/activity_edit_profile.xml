@@ -49,7 +49,7 @@
                 android:text="Done"
                 android:fontFamily="sans-serif-black"
                 android:textStyle="bold"
-                android:textColor="#E8AD05"
+                android:textColor="#8B4513"
                 android:textSize="18sp"
                 android:layout_gravity="end" />
         </LinearLayout>
